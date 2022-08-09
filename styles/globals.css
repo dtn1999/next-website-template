@@ -7,13 +7,6 @@ div#__next > div {
   font-family: "Roboto", sans-serif;
 }
 
-@font-face {
-  font-family: "Reey";
-  src: url("../asset/Reey/Reey-Regular.ttf.woff");
-  font-weight: 400;
-  font-style: normal;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
