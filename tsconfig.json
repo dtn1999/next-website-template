@@ -28,7 +28,9 @@
       "@app/types": ["./src/types"],
       "@app/types/*": ["./src/types/*"],
       "@app/styles": ["./src/styles"],
-      "@app/styles/*": ["./src/styles/*"]
+      "@app/styles/*": ["./src/styles/*"],
+      "@app/hooks": ["./src/hooks"],
+      "@app/hooks/*": ["./src/hooks/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
