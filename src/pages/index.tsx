@@ -1,14 +1,12 @@
 import React from "react";
 import type { NextPage } from "next";
 import cn from "classnames";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { request, gql } from "graphql-request";
+import useSWR from "swr";
 
 const HomePageComponent: NextPage = () => {
-  const { status, data, error, isFetching } = usePosts();
-
   return (
-    <div className="flex flex-col items-center justify-start bg-slate-300 py-[5rem] px-[20rem] text-lg">
+    <div className="flex flex-col items-center justify-start bg-white py-[5rem] px-8 text-lg">
       <p>
         As you visit the posts below, you will notice them in a loading state
         the first time you load them. However, after you return to this list and
@@ -20,41 +18,46 @@ const HomePageComponent: NextPage = () => {
         </strong>
       </p>
       <div className="mt-8">
-        {isFetching ? (
-          <div> Loading ...</div>
-        ) : (
-          status === "success" &&
-          data.map((post: any) => (
-            <div className="py-4 text-blue-600 underline" key={post.id}>
-              {post.title}
-            </div>
-          ))
-        )}
+        <Posts />
       </div>
+      <div>hello </div>
     </div>
   );
 };
 
-const endpoint = "https://graphqlzero.almansi.me/api";
+const query = gql`
+  query {
+    posts {
+      data {
+        id
+        title
+      }
+    }
+  }
+`;
 
-function usePosts() {
-  return useQuery(["posts"], async () => {
-    const {
-      posts: { data },
-    } = await request(
-      endpoint,
-      gql`
-        query {
-          posts {
-            data {
-              id
-              title
-            }
-          }
-        }
-      `
-    );
-    return data;
-  });
+function Posts() {
+  const { data } = useSWR(query);
+  console.log(data);
+  const { posts } = data;
+  return (
+    <React.Fragment>
+      {posts.data.slice(1, 10).map(({ id, title }: any) => (
+        <div key={id} className="py-2 text-lg text-green-400">
+          {title}
+        </div>
+      ))}
+    </React.Fragment>
+  );
 }
+
+function Spinner() {
+  // animation effect while waiting for rendering
+  return (
+    <span className="flex h-screen w-full items-center justify-center">
+      <span className="relative flex h-10 w-10 animate-ping  rounded-full bg-purple-400 opacity-75"></span>
+    </span>
+  );
+}
+
 export default HomePageComponent;
