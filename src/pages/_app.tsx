@@ -1,14 +1,10 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { client } from "../lib";
-import { request } from "graphql-request";
+import { hygraph } from "../lib";
 import { SWRConfig } from "swr";
 
-const endpoint = "https://graphqlzero.almansi.me/api";
-
-const fetcher = async (query: string) => {
-  await new Promise((resolve) => setTimeout(resolve, 10000));
-  return request(endpoint, query);
+const fetcher = async (query: string, args: any) => {
+  return hygraph.request(query, { ...args });
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
