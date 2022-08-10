@@ -1,4 +1,3 @@
-import { request } from "graphql-request";
 import {GraphQLClient} from "graphql-request"
 
 const cmsEndpoint = String(process.env.GRAPHCMS_ENDPOINT)
